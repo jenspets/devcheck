@@ -1,0 +1,4 @@
+To compile:
+
+$ cd src 
+$ gcc -Wall -std=c11 -o devcheck devcheck.c
