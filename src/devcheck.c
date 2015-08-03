@@ -25,6 +25,7 @@ typedef struct _info_t {
   int ssize;
   uint64_t size;
   int32_t nsect;
+  uint32_t nsect_written;
 } info_t;
 
 void usage(char argv0[]){
@@ -67,12 +68,12 @@ void print_info(info_t *info){
 
   fprintf(stderr, "Sector size: %d\nNumber of sectors: %d\nNumber of bytes: %lld\n",
 	  info->ssize, info->nsect, info->size);
+  fprintf(stderr, "Actual sectors written: %d\n", info->nsect_written);
   return;
 }
 
 int main(int argc, char **argv){
   int fd;
-  uint32_t nsect_written;
   info_t *dev_info;
   
   if (argc != 2) {
@@ -96,7 +97,7 @@ int main(int argc, char **argv){
 
   for (uint64_t i=0; DBG_LIMIT; i++){
     if (lseek(fd, i*dev_info->ssize, SEEK_SET) < 0){
-      nsect_written = i;
+      info->nsect_written = i;
       if (errno == EINVAL) {
 	break;
       } else {
