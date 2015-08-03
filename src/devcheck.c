@@ -72,6 +72,7 @@ void print_info(info_t *info){
 
 int main(int argc, char **argv){
   int fd;
+  uint32_t nsect_written;
   info_t *dev_info;
   
   if (argc != 2) {
@@ -92,8 +93,10 @@ int main(int argc, char **argv){
 #if ENABLE_WRITING
 
   fprintf(stderr, "Write zeroes\n");
+
   for (uint64_t i=0; DBG_LIMIT; i++){
     if (lseek(fd, i*dev_info->ssize, SEEK_SET) < 0){
+      nsect_written = i;
       if (errno == EINVAL) {
 	break;
       } else {
