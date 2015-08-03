@@ -90,8 +90,6 @@ int main(int argc, char **argv){
   print_info(dev_info);
   
 #if ENABLE_WRITING
-  /* Zero all bytes on the device */
-  /* Implement later; for now, I do this manually */
 
   fprintf(stderr, "Write zeroes\n");
   for (uint64_t i=0; DBG_LIMIT; i++){
